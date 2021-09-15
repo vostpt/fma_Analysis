@@ -18,7 +18,7 @@ import plotly.express as px
 # Get json data 
 
 
-url = "https://api-dev.fogos.pt/v2/incidents/search?after=2021-09-11&before=2021-09-14&all=1&fma=1"
+url = "https://api-dev.fogos.pt/v2/incidents/search?after=2021-09-15&before=2021-09-15&all=1&fma=1"
 response  = urllib.request.urlopen(url).read()
 
 jsonResponse = json.loads(response.decode('utf-8'))
@@ -49,7 +49,7 @@ df_date = df['date'].value_counts().rename_axis('date').reset_index(name='counts
 
 # Sort dataframe by date 
 
-df_hour.sort_values(by=['date'], inplace=True)
+df_date.sort_values(by=['date'], inplace=True)
 
 # df_district Create dataframe grouped by district and type of occurrence by district 
 
@@ -76,7 +76,7 @@ fig.show()
 # Graph by occurrence per district
 
 fig1 = px.bar(df_district, x='district',y='ocorrencias', color='natureza', template='simple_white',
-	title='<b>Ocorrências de 11 SETEMBRO a 14 SETEMBRO 2021 por distrito</b><br><i>Dados: ANEPC</i>', 
+	title='<b>Total de Ocorrências 15 SETEMBRO por distrito</b><br><i>Dados: ANEPC</i>', 
 	labels={ # replaces default labels by column name
                 "natureza": "Tipo de Ocorrência",  "ocorrencias": "Número de ocorrências", "district":"Distrito"
             },
@@ -87,8 +87,8 @@ fig1.show()
 # Graph by date with total ocurrences
 
 
-fig2 = px.bar(df_hour,x='date', y='counts_hour',template='simple_white',
-	title='<b>Total de Ocorrências de 11 SETEMBRO a 14 SETEMBRO 2021 por dia</b><br><i>Dados: ANEPC</i>', 
+fig2 = px.bar(df_date,x='date', y='counts_hour',template='simple_white',
+	title='<b>Total de Ocorrências 15 SETEMBRO</b><br><i>Dados: ANEPC</i>', 
 	labels={ # replaces default labels by column name
                 "date": "DATA", "counts_hour":"Número de Ocorrências"
             },
